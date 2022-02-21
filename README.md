@@ -326,23 +326,6 @@ RBAC用户权限
 	
 ###  目录结构
 
-1,_test.go文件要有每个共用方法的测试案例 如下：
-
-```go
-func Example_basic() {
-	logger := log.NewLogfmtLogger(os.Stdout)
-	level.Debug(logger).Log("msg", "this message is at the debug level")
-	level.Info(logger).Log("msg", "this message is at the info level")
-	level.Warn(logger).Log("msg", "this message is at the warn level")
-	level.Error(logger).Log("msg", "this message is at the error level")
-}
-```
-
-2，README.md 对整个包的代码解释
-
-3，每个方法要有代码注解
-
-
 ```
 services
 ├── log
@@ -365,4 +348,23 @@ services
 │        └── logrus_test.go
 └── README.md
 ```
+
+1,_test.go文件要有每个共用方法的测试案例 如下：
+
+```go
+func Example_basic() {
+	logger := log.NewLogfmtLogger(os.Stdout)
+	level.Debug(logger).Log("msg", "this message is at the debug level")
+	level.Info(logger).Log("msg", "this message is at the info level")
+	level.Warn(logger).Log("msg", "this message is at the warn level")
+	level.Error(logger).Log("msg", "this message is at the error level")
+}
+```
+
+2，README.md 对整个包的代码解释
+
+3，每个方法要有代码注解
+
+
+
 	
