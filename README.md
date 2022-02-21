@@ -88,7 +88,7 @@ S
 
 ## ARRAY & SLICE 切片
 
-#### ARRAY
+### ARRAY
 概念:存储一组相同数据类型的数据结构。
 
 特点:有序(下标index)，数据可以重复,定长,索引能力强。
@@ -150,15 +150,15 @@ https://zhuanlan.zhihu.com/p/61121325
 注意 底层数组是可以被多个 slice 同时指向的，因此对一个 slice 的元素进行操作是有可能影响到其他 slice 的。
 
 
-####slice 的创建
+###slice 的创建
 ![image](./file/v2-3e86ada5b8ca0765c4b21fcbd1667e7a_720w.jpg)
 
-####nil 切片和空切片(不带指针)
+###nil 切片和空切片(不带指针)
 
 ![image](./file/v2-d8a41d16e7392a323683b576440f2039_720w.jpg)
 
 
-####Slice的扩展 append
+###Slice的扩展 append
 
 
 1,可以通过appen()来对slice扩展。
@@ -187,7 +187,7 @@ https://zhuanlan.zhihu.com/p/61121325
 
 ```
 
-####Slice的ReSlice
+###Slice的ReSlice
 
 对slice做slice是可以的，生成的slice都是对同一个数组的view。
 
@@ -212,7 +212,7 @@ s1[1:3] =  [3 4]
 
 
 
-####Slice的Copy
+###Slice的Copy
 
 函数copy在两个slice间赋值数据，赋值长度以len小为准，两个silce可指向同一底层数组
 
@@ -225,7 +225,7 @@ s1[1:3] =  [3 4]
     fmt.Println(v2)   //[8 9 2 3 4]
     fmt.Println(data) //[8 9 2 3 4 5 6 7 8 9]
 ```
-#### CHAN
+### CHAN
 
 1,没有设置长度的情况下是阻塞的，逐个发送，逐个消耗
 
@@ -266,9 +266,9 @@ close之后  ok = false
  
 引用类型有切片、map、接口、函数类型以及chan。
 
-#基本功能
+# 基本功能
 
-####  模块1
+###  模块1
 token的鉴权机制
 
 包名：auth
@@ -282,14 +282,14 @@ token的鉴权机制
 	-casbin: 基于 github.com/casbin/casbin/v2 去实现
 
 
-####  模块2
+###  模块2
 RBAC用户权限
 
 包名：rbac
 
 用途：RBAC是基于角色的访问控制（Role-Based Access Control ）在 RBAC  中，权限与角色相关联，用户通过成为适当角色的成员而得到这些角色的权限。这就极大地简化了权限的管理。这样管理都是层级相互依赖的，权限赋予给角色，而把角色又赋予用户，这样的权限设计很清楚，管理起来很方便。
 
-####  模块3
+###  模块3
 缓存
 
 包名：cache
@@ -304,7 +304,7 @@ RBAC用户权限
 	
 
 
-####  模块4
+###  模块4
 消息队列
 
 包名：queue
@@ -313,7 +313,7 @@ RBAC用户权限
 
 	-rabbitmq: 基于库github.com/streadway/amqp操作rabbitmq
 	
-####  模块5
+###  模块5
 日志
 
 包名：log
