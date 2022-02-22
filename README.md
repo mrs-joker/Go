@@ -154,7 +154,8 @@ https://zhuanlan.zhihu.com/p/61121325
 注意 底层数组是可以被多个 slice 同时指向的，因此对一个 slice 的元素进行操作是有可能影响到其他 slice 的。
 
 
-###slice 的创建
+### slice 的创建
+
 ![image](./file/v2-3e86ada5b8ca0765c4b21fcbd1667e7a_720w.jpg)
 
 ###nil 切片和空切片(不带指针)
@@ -162,7 +163,7 @@ https://zhuanlan.zhihu.com/p/61121325
 ![image](./file/v2-d8a41d16e7392a323683b576440f2039_720w.jpg)
 
 
-###Slice的扩展 append
+### Slice的扩展 append
 
 
 1,可以通过appen()来对slice扩展。
@@ -191,7 +192,7 @@ https://zhuanlan.zhihu.com/p/61121325
 
 ```
 
-###Slice的ReSlice
+### Slice的ReSlice
 
 对slice做slice是可以的，生成的slice都是对同一个数组的view。
 
