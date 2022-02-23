@@ -158,7 +158,17 @@ https://zhuanlan.zhihu.com/p/61121325
 
 ![image](./file/v2-3e86ada5b8ca0765c4b21fcbd1667e7a_720w.jpg)
 
-###nil 切片和空切片(不带指针)
+直接声名
+
+![image](./file/2019092422451529.png)
+
+make
+
+![image](./file/20190924224536323.png)
+
+
+
+### nil 切片和空切片(不带指针)
 
 ![image](./file/v2-d8a41d16e7392a323683b576440f2039_720w.jpg)
 
@@ -217,7 +227,7 @@ s1[1:3] =  [3 4]
 
 
 
-###Slice的Copy
+### Slice的Copy
 
 函数copy在两个slice间赋值数据，赋值长度以len小为准，两个silce可指向同一底层数组
 
@@ -269,7 +279,87 @@ close之后  ok = false
 ####  MAP
  函数间传递Map是不会拷贝一个该Map的副本的，也就是说如果一个Map传递给一个函数，该函数对这个Map做了修改，那么这个Map的所有引用，都会感知到这个修改。
  
-引用类型有切片、map、接口、函数类型以及chan。
+测试的主要目的是对于map，当作为函数传参时候，函数内部的改变会不会透传到外部，以及函数传参内外是不是一个map，也就是传递的是实例还是指针。
+
+
+Test Case1：传参为map。
+
+```
+func main(){
+	fmt.Println("--------------- m ---------------")
+	m := make(map[string]string)
+	m["1"] = "0"
+	fmt.Printf("m outer address %p, m=%v \n", m, m)
+	passMap(m)
+	fmt.Printf("post m outer address %p, m=%v \n", m, m)
+}
+
+func passMap(m map[string]string) {
+	fmt.Printf("m inner address %p \n", m)
+	m["11111111"] = "11111111"
+	fmt.Printf("post m inner address %p \n", m)
+}
+
+
+output 
+
+--------------- m ---------------
+m outer address 0xc0000b0000, m=map[1:0] 
+m inner address 0xc0000b0000 
+post m inner address 0xc0000b0000 
+post m outer address 0xc0000b0000, m=map[1:0 11111111:11111111] 
+
+
+```
+
+从运行结果我们可以知道：
+
+1. 当传参为map的时候，其实传递的是指针地址。函数内外map的地址都是一样的。
+
+2. 函数内部的改变会透传到函数外部。
+
+Test Case2：Test Case1的实现其实也有个特殊使用例子，也就是当函数入参map没有初始化的时候。
+
+```
+
+func main(){
+	fmt.Println("--------------- m2 ---------------")
+	var m2 map[string]string//未初始化
+	fmt.Printf("m2 outer address %p, m=%v \n", m2, m2)
+	passMapNotInit(m2)
+	fmt.Printf("post m2 outer address %p, m=%v \n", m2, m2)
+}
+
+func passMapNotInit(m map[string]string)  {
+	fmt.Printf("inner: %v, %p\n",m, m)
+	m = make(map[string]string, 0)
+	m["a"]="11"
+	fmt.Printf("inner: %v, %p\n",m, m)
+}
+
+output
+
+--------------- m2 ---------------
+m2 outer address 0x0, m=map[] 
+inner: map[], 0x0
+inner: map[a:11], 0xc0000ac120
+post m2 outer address 0x0, m=map[] 
+
+
+```
+
+从结果可以看出，当入参map没有初始化的时候，就不一样了：
+
+1. 没有初始化的map地址都是0；
+
+2. 函数内部初始化map不会透传到外部map。
+
+理解  因为map没有初始化，所以map的地址传递到函数内部之后初始化，会改变map的地址，但是外部地址不会改变。有一种方法，return 新建的map。
+
+
+
+![image](./file/20190907100725824.png)
+
 
 # 基本功能
 
