@@ -151,8 +151,6 @@ https://zhuanlan.zhihu.com/p/61121325
 
 ![image](./file/20190924224426172.png)
 
-注意 底层数组是可以被多个 slice 同时指向的，因此对一个 slice 的元素进行操作是有可能影响到其他 slice 的。
-
 
 ### slice 的创建
 
@@ -202,6 +200,10 @@ make
 
 ```
 
+注意 底层数组是可以被多个 slice 同时指向的，因此对一个 slice 的元素进行操作是有可能影响到其他 slice 的。
+
+
+
 ### Slice的ReSlice
 
 对slice做slice是可以的，生成的slice都是对同一个数组的view。
@@ -222,8 +224,6 @@ make
 s1 =  [2 3 4 5 6]
 s1[1:3] =  [3 4 5 6]
 
-
-
 ```
 
 
@@ -242,41 +242,7 @@ s1[1:3] =  [3 4 5 6]
     fmt.Println(v2)   //[8 9 2 3 4]
     fmt.Println(data) //[8 9 2 3 4 5 6 7 8 9]
 ```
-### CHAN
 
-1,没有设置长度的情况下是阻塞的，逐个发送，逐个消耗
-
-2,优雅的接收
-```
-ch,ok := <-chan 
-close之后  ok = false
-```
-
-3,close 之后，会一直发送默认值 
-
-4，chan 通常是用在协程之前使用
-
-```go
-
-	// Interrupt handler.
-	errc := make(chan error)
-	go func() {
-		c := make(chan os.Signal)
-		signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
-		errc <- fmt.Errorf("%s", <-c)
-	}()
-
-	// HTTP transport.
-	go func() {
-		errc <- http.ListenAndServe(`:8888`, serverMiddleware(router))
-	}()
-
-	// Run!
-	fmt.Println("exit", <-errc)
-
-```
-
-#### 引用类型有切片、map、接口、函数类型以及chan。
 
 ####  MAP
  函数间传递Map是不会拷贝一个该Map的副本的，也就是说如果一个Map传递给一个函数，该函数对这个Map做了修改，那么这个Map的所有引用，都会感知到这个修改。
@@ -361,6 +327,43 @@ post m2 outer address 0x0, m=map[]
 
 
 ![image](./file/20190907100725824.png)
+
+
+#### 引用类型有切片、map、接口、函数类型以及chan。
+
+### CHAN
+
+1,没有设置长度的情况下是阻塞的，逐个发送，逐个消耗
+
+2,优雅的接收
+```
+ch,ok := <-chan 
+close之后  ok = false
+```
+
+3,close 之后，会一直发送默认值 
+
+4，chan 通常是用在协程之前使用
+
+```go
+
+	// Interrupt handler.
+	errc := make(chan error)
+	go func() {
+		c := make(chan os.Signal)
+		signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
+		errc <- fmt.Errorf("%s", <-c)
+	}()
+
+	// HTTP transport.
+	go func() {
+		errc <- http.ListenAndServe(`:8888`, serverMiddleware(router))
+	}()
+
+	// Run!
+	fmt.Println("exit", <-errc)
+
+```
 
 
 # 基本功能
@@ -461,7 +464,3 @@ func Example_basic() {
 2，README.md 对整个包的代码解释
 
 3，每个方法要有代码注解
-
-
-
-	
