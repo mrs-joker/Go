@@ -324,6 +324,29 @@ post m2 outer address 0x0, m=map[]
 
 理解  因为map没有初始化，所以map的地址传递到函数内部之后初始化，会改变map的地址，但是外部地址不会改变。有一种方法，return 新建的map。
 
+```
+src/runtime/map.go
+
+
+// A header for a Go map.
+type hmap struct {
+	// Note: the format of the hmap is also encoded in cmd/compile/internal/gc/reflect.go.
+	// Make sure this stays in sync with the compiler's definition.
+	count     int // # live cells == size of map.  Must be first (used by len() builtin)
+	flags     uint8
+	B         uint8  // log_2 of # of buckets (can hold up to loadFactor * 2^B items)
+	noverflow uint16 // approximate number of overflow buckets; see incrnoverflow for details
+	hash0     uint32 // hash seed
+
+	buckets    unsafe.Pointer // array of 2^B Buckets. may be nil if count==0.
+	oldbuckets unsafe.Pointer // previous bucket array of half the size, non-nil only when growing
+	nevacuate  uintptr        // progress counter for evacuation (buckets less than this have been evacuated)
+
+	extra *mapextra // optional fields
+}
+
+```
+
 
 
 ![image](./file/20190907100725824.png)
@@ -462,5 +485,4 @@ func Example_basic() {
 ```
 
 2，README.md 对整个包的代码解释
-
 3，每个方法要有代码注解
