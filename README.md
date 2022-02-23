@@ -173,7 +173,6 @@ make
 
 ### Slice的扩展 append
 
-
 1,可以通过appen()来对slice扩展。
 
 2,当底层数组需要扩容时，仅当Capacity需要扩容的时候，会按照当前底层数组
@@ -485,4 +484,5 @@ func Example_basic() {
 ```
 
 2，README.md 对整个包的代码解释
+
 3，每个方法要有代码注解
